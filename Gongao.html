@@ -7,20 +7,61 @@
 <style>
   * {margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   :root {
-    --bg: #171717;--card: #1c1c1c;--text: #eaeaea;
-    --subtext: #aaa;--border: #333;--primary: #3E9AE2;
+    --bg: #171717;
+    --card: #1c1c1c;
+    --text: #eaeaea;
+    --subtext: #aaa;
+    --border: #333;
+    --primary: #3E9AE2;
   }
-  body {background:var(--bg);color:var(--text);font-family:system-ui;padding:20px;font-size:10px;}
-  .notice-box {max-width:600px;margin:50px auto;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;}
-  .notice-hd {font-size:20px;font-weight:600;color:var(--primary);text-align:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-  .notice-text {line-height:2;white-space:pre-wrap;font-size:15px;}
+  body.light-mode {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --text: #1c1c1e;
+    --subtext: #6e6e73;
+    --border: #d1d1d6;
+    --primary: #0071e3;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui;
+    padding: 20px;
+    font-size: 10px;
+  }
+  .notice-box {
+    max-width: 600px;
+    margin: 50px auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .notice-hd {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .notice-text {
+    line-height: 2;
+    white-space: pre-wrap;
+    font-size: 15px;
+  }
+  .notice-text a {
+    color: var(--primary);
+  }
 </style>
 </head>
 <body>
   <div class="notice-box">
     <div class="notice-hd">DChat最新公告</div>
     <div class="notice-text">
-2026.5.3［Dchat1.7.2]更改了版本命名机制让它变得更合理了,公告现在必须等待5秒才能关闭，不然你们总是不愿意看公告,所有用户必须每周在群里正常聊天，聊什么都行(别违规),设置里有了显示版本号的功能，更方便的得知目前的版本是什么了,对电脑端进行了优化,网页版已经制作出来了，大部分手机浏览器无法正常观看哦,这更适合电脑端,网址看群公告,手机的横屏导致对话列表一直出现的bug已经修复,不过我更建议您使用平板横屏,否则弹窗可能会跑到屏幕外面,对的，对电脑端进行优化往后的难一些之前被错误地归于了1.71,这些原本都是1.7.2的更新内容，但我之前懒得写这里，所以都被弄到了1.71
+      <!-- 把你的公告文案粘贴在这里，替换掉这行 -->
+      2026.5.3［Dchat1.7.2]更改了版本命名机制让它变得更合理了,公告现在必须等待5秒才能关闭，不然你们总是不愿意看公告,所有用户必须每周在群里正常聊天，聊什么都行(别违规),设置里有了显示版本号的功能，更方便的得知目前的版本是什么了,对电脑端进行了优化,网页版已经制作出来了，大部分手机浏览器无法正常观看哦,这更适合电脑端,网址看群公告,手机的横屏导致对话列表一直出现的bug已经修复,不过我更建议您使用平板横屏,否则弹窗可能会跑到屏幕外面,对的，对电脑端进行优化往后的难一些之前被错误地归于了1.71,这些原本都是1.7.2的更新内容，但我之前懒得写这里，所以都被弄到了1.71
 2026.4.15［Dchat1.71]更改了用于内容审核的AI的提示词，使它变得更加宽松，而不是原本的过于严苛到打个招呼都不让发,修改了公告的刷新时间到10分钟刷新一次，所以你可以看完公告了
 2026.4.24[Dchat_1.7]已经更新完毕，极大缩减了占用的空间，且之后都会自动更新了，并且占用的空间仍然保持不变，我不建议直接进行更新，因为你的数据会全部丢失的，建议下载好之后更改一下包名，做成共存的
 角色扮演配置提示词时输入剩下面那5个东西体验更佳
@@ -50,5 +91,21 @@
 8. 凡下载、安装、使用本软件，即视为已阅读、理解并同意本声明全部内容，自愿承担使用风险。
     </div>
   </div>
+
+  <script>
+    // 接收主页面发来的主题切换消息
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'themeChange') {
+        if (e.data.theme === 'light') {
+          document.body.classList.add('light-mode');
+        } else {
+          document.body.classList.remove('light-mode');
+        }
+      }
+    });
+
+    // 页面加载时主动向主页面请求当前主题
+    window.parent.postMessage({ type: 'themeRequest' }, '*');
+  </script>
 </body>
 </html>
